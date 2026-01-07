@@ -14,13 +14,21 @@
     font-weight: normal;
     font-style: normal;
 }
-
 /* --- UTILITIES --- */
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 
+/* FIX: Only use scrollbar-gutter on Desktop (min-width: 769px) */
+@media (min-width: 769px) {
+    html {
+        scrollbar-gutter: stable; 
+    }
+}
+
+/* Ensure HTML doesn't overflow horizontally on mobile */
 html {
-    scrollbar-gutter: stable; /* Prevents layout shift between pages */
+    overflow-x: hidden;
+    width: 100%;
 }
 
 * {
@@ -199,6 +207,14 @@ body {
     width: 1px;      
     background-color: rgba(255, 255, 255, 0.4); 
 }
+
+
+
+
+
+
+
+
 /* =========================================
    GLOBAL MOBILE FOOTER
    ========================================= */
@@ -215,72 +231,81 @@ body {
         min-height: 100vh;
         overflow-x: hidden;
     }
-    .footer-card {
+.footer-card {
         margin: 15px;
-        margin-bottom: 90px; /* Space for Floating Nav */
+        margin-bottom: 90px;
         
+        /* 1. Force Row Layout */
         display: flex !important;
-        flex-direction: row !important; /* Force side-by-side */
+        flex-direction: row !important; 
         justify-content: space-between;
         align-items: center;
         
-        padding: 15px 20px; /* Add padding back */
-        gap: 5px;
-        height: auto;
+        /* 2. Tight Padding to maximize space */
+        padding: 0 10px; 
+        gap: 2px;
+        
+        height: 50px; /* Fixed small height */
         min-height: auto;
     }
 
-    /* Reset Children */
-    .footer-brand, .footer-social, .footer-copyright {
-        width: auto !important;
-        flex: 1;
+    /* Reset ALL Children (Added .footer-shairan) */
+    .footer-brand, .footer-copyright, .footer-shairan {
+        flex: 1; /* Share space equally */
         margin: 0;
-        height: auto;
-        padding: 0; /* Remove desktop padding */
+        padding: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
 
-    /* Hide Lines */
-    .footer-brand::after, .footer-social::after { display: none; }
+    /* Hide Separators & Socials on Mobile to save width */
+    .footer-brand::after, .footer-shairan::after { display: none; }
+    .footer-social { display: none !important; } 
 
-    /* Left */
+    /* --- LEFT: Brand Name --- */
     .footer-brand { 
+        justify-content: flex-start;
         font-size: 0.6rem; 
         font-weight: 800; 
-        justify-content: flex-start; 
+        line-height: 1;
+        white-space: nowrap;
     }
-    
-    /* Middle */
-    .footer-social { 
-        justify-content: center; 
-        gap: 10px; 
-    }
-    .footer-social a svg { width: 16px; height: 16px; }
+    /* Hide the email address on mobile, just show "Shairan Cafe" */
+    .footer-email span { display: none; } 
 
-    /* Right (Logo Fix) */
+    /* --- MIDDLE: Copyright Text (The missing part) --- */
+    .footer-shairan {
+        justify-content: center;
+        font-size: 0.35rem; /* Tiny text */
+        text-align: center;
+        white-space: normal; /* Allow 2 lines if needed */
+        line-height: 1.1;
+        opacity: 0.8;
+    }
+
+    /* --- RIGHT: Powered By --- */
     .footer-copyright {
-        font-size: 0.4rem; 
-        display: flex;
-        flex-direction: column; /* Stack Text top, Logo bottom */
-        align-items: flex-end;  
+        justify-content: flex-end;
+        flex-direction: column; /* Stack "Powered by" on top of Logo */
+        align-items: flex-end;
         justify-content: center;
         text-align: right;
-        line-height: 1.2;
+        font-size: 0.35rem;
+    }
+    
+    .footer-copyright span {
+        margin: 0;
+        margin-bottom: 2px;
+        opacity: 0.7;
     }
 
-    /* FORCE SMALL LOGO */
-/* FORCE SMALL LOGO - INCREASED SIZE */
+    /* Tiny Logo */
     .footer-copyright img {
         width: auto !important; 
-        height: auto !important; 
-        
-        /* Changed from 20px -> 40px */
-        max-height: 15px; 
-        
-        /* Changed from 60px -> 100px to allow width to expand */
+        height: 12px !important; /* Fixed height */
         max-width: 40px;
-        
-        margin-top: 5px;
-        object-fit: contain;
+        margin: 0;
     }
 
 
