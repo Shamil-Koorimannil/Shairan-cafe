@@ -1,0 +1,354 @@
+@import url("../global.css");
+
+/* --- 2. THE GRID LAYOUT --- */
+/* --- 2. THE GRID LAYOUT (Fixed) --- */
+.main-container {
+    display: grid;
+    width: 100%;  
+    height: 90vh; 
+    max-width: 1200px;
+    gap: var(--gap-size);
+    
+    /* FIX: Added 'auto' at the end for the Footer row */
+    grid-template-rows: 80px 1fr 2fr 80px;
+    grid-template-columns: 1fr 1fr 1fr; 
+    
+    /* FIX: Added "footer" area at the bottom */
+    grid-template-areas: 
+        "header header header"
+        "stat1  stat2  stat3"
+        "form   form   form"
+        "footer footer footer";
+}
+
+/* --- UNIVERSAL DESKTOP HEADER (Paste this in all CSS files) --- */
+.header-card {
+    grid-area: header;
+    height: 100%;
+    width: 100%;
+    
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    /* STANDARD PADDING: Ensure this is 30px on ALL pages */
+    padding: 0 30px; 
+    box-sizing: border-box;
+    
+    position: relative;
+    z-index: 1000;
+}
+
+.logo-circle {
+    width: 50px;
+    height: 50px; /* Fixed height for consistency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-pills {
+    background-color: var(--bg-color);
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* --- CARD GENERIC STYLE --- */
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    position: relative;
+    padding: 20px;
+    color: var(--text-color);
+    display: flex;
+}
+
+/* --- ROW 1: STAT BOXES --- */
+#stat-1 { grid-area: stat1; }
+#stat-2 { grid-area: stat2; }
+#stat-3 { grid-area: stat3; }
+
+.card-content.centered {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.big-icon { font-size: 4rem; font-weight: 900; line-height: 1; color: var(--pill-color); }
+.label { opacity: 0.8; margin-top: 5px; font-weight: 600;}
+
+
+/* --- ROW 2: BIG FORM BOX --- */
+.big-form-box {
+    grid-area: form;
+    overflow: hidden; /* Prevents overflow */
+}
+
+.form-layout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 40px;
+}
+
+.form-intro {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+}
+.form-intro h2 { font-size: 4rem; margin: 0; line-height: 1; color: var(--pill-color); }
+.form-intro p { opacity: 0.8; font-size: 1.1rem; max-width: 300px; }
+
+/* Form Styles */
+.wireframe-form {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    padding-right: 20px;
+}
+.form-row { display: flex; gap: 20px; }
+.input-wrapper { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.input-wrapper label { font-size: 0.8rem; opacity: 0.7; margin-left: 10px; }
+.input-wrapper input, .input-wrapper textarea {
+    background: rgba(0,0,0,0.2);
+    border: none;
+    border-radius: 15px;
+    padding: 12px 15px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+}
+
+/* --- PLACEHOLDER STYLING --- */
+.input-wrapper input::placeholder,
+.input-wrapper textarea::placeholder {
+    color: var(--bg-color); 
+    opacity: 1; 
+}
+
+.input-wrapper textarea { resize: none; height: 100%; }
+.input-wrapper.full { flex-grow: 1; }
+
+.submit-pill {
+    /* Position it absolutely in the corner */
+    position: absolute;
+    bottom: -10px; 
+    right: -10px;
+    
+    /* Visual Styling */
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 10px solid var(--bg-color);
+    padding: 12px 30px; /* Made slightly wider */
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    width: auto; /* Allow auto width or fixed, up to you */
+    min-width: 150px;
+    transition: 0.3s;
+}
+
+.submit-pill:hover {
+    transform: scale(1.05);
+}
+
+/* --- THE "DETACHED PILL" --- */
+.detached-pill {
+    position: absolute;
+    background-color: var(--pill-color);
+    color: var(--card-bg);
+    padding: 8px 25px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 10;
+}
+.bottom-right { bottom: 20px; right: 20px; } /* Kept inside card for cleanliness */
+.top-right { top: 20px; right: 20px; }
+.footer-card {
+    grid-area: footer; /* Crucial: Tells footer to go to the bottom slot */
+    background-color: var(--card-bg); /* Optional: Keeps it consistent */
+    border-radius: var(--radius);
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- MOBILE FIX --- */
+@media (max-width: 768px) {
+    body { height: auto; overflow-y: auto; display: block; padding: 20px 0;}
+    .main-container {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .header-card {
+    height: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none; /* Allows clicking "through" the empty header */
+    overflow: visible;    /* Allows the navbar to float outside */
+    z-index: 9999;
+    background: transparent;
+    display: flex;        /* Ensures the child (nav) is rendered */
+}
+
+/* Hide logo on mobile */
+.logo-circle { display: none; }
+
+/* 2. The Navbar (Floating Container) */
+.nav-pills {
+    position: fixed;       /* Locks it to the screen */
+    bottom: 30px;          /* Distance from bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it perfectly */
+    
+    width: 96%;
+    max-width: 400px;
+    height: 50px;
+
+    background-color: #F37021; /* Brand Orange Container */
+    border-radius: 50px;
+    padding: 5px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 3px;
+
+    z-index: 10000;        /* Sits on top of everything */
+    pointer-events: auto;  /* RE-ENABLES CLICKING */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* 3. The Navigation Buttons */
+.nav-pills a {
+    flex: 1;
+    font-size: 0.65rem;
+    text-decoration: none;
+    padding: 0 2px;
+    
+    background-color: #A0281F; /* Default: Dark Red */
+    color: white;              /* Default: White Text */
+    
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+/* 4. Active State (SELECTED PAGE) - WHITE BACKGROUND */
+.nav-pills a.active {
+    background-color: #ffffff !important; /* Force White */
+    color: #A0281F !important;            /* Text becomes Dark Red */
+    font-weight: 800;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transform: scale(1.02);               /* Slight pop */
+    border: none;
+}
+    .stat-box { height: 150px; }
+    .big-form-box { height: auto; padding: 30px; }
+    .form-layout { flex-direction: column; }
+    /* --- FOOTER (Flex Row Layout) --- */
+    .form-row {
+        display: flex;
+        flex-direction: row; /* Force side-by-side */
+        gap: 10px;           /* Reduce gap to fit on small screens */
+        width: 100%;
+    }
+
+    /* 2. Intro Text Size */
+    .form-intro h2 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    /* 3. Input Containers */
+    .input-wrapper {
+        flex: 1;             /* Each takes exactly 50% */
+        min-width: 0;        /* Prevents overflow if text is long */
+    }
+
+    /* 4. Input Styling for Mobile */
+    .input-wrapper input, .input-wrapper textarea {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 0.8rem;   /* Slightly smaller text to prevent cutting off */
+        padding: 10px;       /* Compact padding */
+    }
+    
+    /* 5. Message Box (Full Width) */
+    .input-wrapper.full {
+        width: 100%;
+        margin-top: 5px;
+    }
+    .footer-card {
+        margin: 15px;
+        margin-bottom: 90px; /* Space for Floating Nav */
+        
+        /* 1. FORCE ROW DIRECTION */
+        display: flex !important;
+        flex-direction: row !important; 
+        justify-content: space-between; /* Spread items out */
+        align-items: center;
+        
+        padding: 15px 20px;
+        gap: 5px;
+        text-align: left;
+    }
+
+    /* 2. MAKE ITEMS FIT SIDE-BY-SIDE */
+    .footer-brand, .footer-social, .footer-copyright {
+        width: auto !important; /* Stop taking full width */
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* 3. RESIZE TEXT TO FIT MOBILE ROW */
+    .footer-brand { 
+        font-size: 0.6rem; 
+        font-weight: 800;
+        flex: 1; /* Brand on left */
+    }
+    
+    .footer-social {
+        flex: 1; 
+        justify-content: center; /* Icons in middle */
+        gap: 10px;
+    }
+    
+    .footer-copyright {
+        flex: 1;
+        font-size: 0.5rem; 
+        justify-content: flex-end; /* Copyright on right */
+        text-align: right;
+    }
+    
+    /* Resize Icons slightly */
+    .footer-social a svg {
+        width: 16px;
+        height: 16px;
+    }
+}

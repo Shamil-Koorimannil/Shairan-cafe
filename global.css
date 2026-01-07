@@ -1,0 +1,202 @@
+:root {
+    --bg-color: #ffffff;       /* Page Background */
+    --card-bg: #eb6d2f;        /* Orange Cards */
+    --accent: #a82b23;         /* Dark Red Accents */
+    --nav: #fed2a5;            /* Nav Color */
+    --text-color: #ffffff;     /* White Text */
+    --gap-size: 12px;
+    --radius: 24px;
+}
+
+@font-face {
+    font-family: 'Hidayatullah';
+    src: url('../assets/Fonts/hidayatullah Demo.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- UTILITIES --- */
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+html {
+    scrollbar-gutter: stable; /* Prevents layout shift between pages */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* --- PERFORMANCE BOOSTER --- */
+/* Select all direct children EXCEPT the header to avoid fixed position bugs */
+.main-container > *:not(.header-card) {
+    will-change: transform, opacity;
+    transform: translateZ(0); 
+}
+
+
+/* =========================================
+   GLOBAL FOOTER STYLES (Finalized)
+   ========================================= */
+.footer-card {
+    grid-area: footer;
+    background-color: var(--card-bg);
+    border-radius: 50px; /* Fully rounded on desktop */
+    
+    display: flex;
+    align-items: center;
+    padding: 0; /* Let children handle padding */
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(243, 112, 33, 0.3);
+    overflow: hidden; 
+    
+    /* Ensure minimum height */
+    min-height: 80px;
+}
+
+/* Common Styles */
+.footer-brand, .footer-social, .footer-copyright {
+    flex: 1; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+}
+
+/* 1. BRAND (Left) */
+.footer-brand { 
+    font-size: 0.7rem; 
+    font-weight: 800; 
+    color: var(--bg-color); 
+    text-align: left;
+    padding-left: 30px;      /* ADDED: Breathing room */
+    justify-content: flex-start;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 2. SOCIAL (Middle) */
+.footer-social { 
+    flex: 1; 
+    justify-content: center; 
+    gap: 15px; 
+}
+.footer-social a svg { 
+    width: 18px; 
+    height: 18px; 
+    color: var(--bg-color); 
+    transition: 0.3s;
+}
+.footer-social a:hover svg { transform: scale(1.2); }
+
+/* 3. COPYRIGHT (Right) */
+.footer-copyright { 
+    font-size: 0.6rem; 
+    opacity: 0.8; 
+    color: var(--bg-color); 
+    text-align: right; 
+    padding-right: 30px;     /* ADDED: Breathing room */
+    justify-content: flex-end;
+}
+
+/* Separators (Lines) */
+.footer-brand::after, 
+.footer-social::after {
+    content: "";
+    position: absolute;
+    right: 0;        
+    top: 25%;        
+    height: 50%;     
+    width: 1px;      
+    background-color: rgba(255, 255, 255, 0.4); 
+}
+
+
+/* =========================================
+   GLOBAL MOBILE FOOTER
+   ========================================= */
+@media (max-width: 768px) {
+
+    .footer-card {
+        margin: 15px;
+        margin-bottom: 90px; /* Space for Floating Nav */
+        
+        display: flex !important;
+        flex-direction: row !important; /* Force side-by-side */
+        justify-content: space-between;
+        align-items: center;
+        
+        padding: 15px 20px; /* Add padding back */
+        gap: 5px;
+        height: auto;
+        min-height: auto;
+    }
+
+    /* Reset Children */
+    .footer-brand, .footer-social, .footer-copyright {
+        width: auto !important;
+        flex: 1;
+        margin: 0;
+        height: auto;
+        padding: 0; /* Remove desktop padding */
+    }
+
+    /* Hide Lines */
+    .footer-brand::after, .footer-social::after { display: none; }
+
+    /* Left */
+    .footer-brand { 
+        font-size: 0.6rem; 
+        font-weight: 800; 
+        justify-content: flex-start; 
+    }
+    
+    /* Middle */
+    .footer-social { 
+        justify-content: center; 
+        gap: 10px; 
+    }
+    .footer-social a svg { width: 16px; height: 16px; }
+
+    /* Right (Logo Fix) */
+    .footer-copyright {
+        font-size: 0.4rem; 
+        display: flex;
+        flex-direction: column; /* Stack Text top, Logo bottom */
+        align-items: flex-end;  
+        justify-content: center;
+        text-align: right;
+        line-height: 1.2;
+    }
+
+    /* FORCE SMALL LOGO */
+/* FORCE SMALL LOGO - INCREASED SIZE */
+    .footer-copyright img {
+        width: auto !important; 
+        height: auto !important; 
+        
+        /* Changed from 20px -> 40px */
+        max-height: 15px; 
+        
+        /* Changed from 60px -> 100px to allow width to expand */
+        max-width: 40px;
+        
+        margin-top: 5px;
+        object-fit: contain;
+    }
+}

@@ -1,0 +1,329 @@
+@import url("../global.css");
+
+/* =========================================
+   1. DESKTOP LAYOUT (Grid)
+   ========================================= */
+.main-container {
+    display: grid;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh; /* Match other pages */
+    gap: 20px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+
+    /* Fixed Row Heights */
+    grid-template-rows: 80px 2fr 1.2fr 80px; 
+    grid-template-columns: 1fr 1fr 1fr;
+    
+    grid-template-areas: 
+        "header header header"
+        "hero   hero   hero"
+        "img    miss   feat"  /* Left | Center | Right */
+        "footer footer footer";
+}
+
+/* --- UNIVERSAL DESKTOP HEADER --- */
+.header-card {
+    grid-area: header;
+    height: 100%;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px; 
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1000;
+}
+
+.logo-circle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-pills {
+    background-color: var(--bg-color);
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav-pills a {
+    text-decoration: none;
+    color: var(--accent);
+    padding: 5px 20px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.nav-pills a.active {
+    background-color: var(--accent);
+    color: var(--bg-color);
+}
+
+/* --- HERO SECTION --- */
+.story-hero-card {
+    grid-area: hero;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--card-bg);
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    /* Optional: Add a background image if you have one for story */
+    /* background-image: url('../assets/images/story-bg.png'); */
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 600px;
+    opacity: 0.9;
+    color: var(--text-color);
+}
+
+/* --- 3 BOXES LAYOUT (Mission - Tagline - Vision) --- */
+
+/* Wrapper: Invisible on desktop to let Grid handle placement */
+.carousel-wrapper {
+    display: contents; 
+}
+
+/* Generic Card Styles */
+.card-mission, .card-features {
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* 1. MISSION (Left Box) */
+.card-mission:first-of-type {
+    grid-area: img; /* Left Column */
+    background-color: #8B0000; /* Dark Red */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 2. TAGLINE (Center Box) */
+.card-features {
+    grid-area: miss; /* Center Column */
+    background-color: #F37021; /* Orange */
+    color: white; /* Text Color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-features h3 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* 3. VISION (Right Box) */
+.card-mission:last-of-type {
+    grid-area: feat; /* Right Column */
+    background-color: #8B0000; /* Dark Red */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Typography for Mission/Vision */
+.card-mission h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: white;
+}
+.card-mission p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.9;
+    color: white;
+}
+
+/* --- FOOTER --- */
+.footer-card {
+    grid-area: footer;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+
+
+
+/* =========================================
+   2. MOBILE LAYOUT (Peeking Carousel)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        gap: 15px;
+        overflow-x: hidden;
+    }
+
+    /* 1. HEADER (Invisible Wrapper) */
+
+/* 1. Header Container (Invisible Wrapper) */
+.header-card {
+    height: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none; /* Allows clicking "through" the empty header */
+    overflow: visible;    /* Allows the navbar to float outside */
+    z-index: 9999;
+    background: transparent;
+    display: flex;        /* Ensures the child (nav) is rendered */
+}
+
+/* Hide logo on mobile */
+.logo-circle { display: none; }
+
+/* 2. The Navbar (Floating Container) */
+.nav-pills {
+    position: fixed;       /* Locks it to the screen */
+    bottom: 30px;          /* Distance from bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it perfectly */
+    
+    width: 96%;
+    max-width: 400px;
+    height: 50px;
+
+    background-color: #F37021; /* Brand Orange Container */
+    border-radius: 50px;
+    padding: 5px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 3px;
+
+    z-index: 10000;        /* Sits on top of everything */
+    pointer-events: auto;  /* RE-ENABLES CLICKING */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* 3. The Navigation Buttons */
+.nav-pills a {
+    flex: 1;
+    font-size: 0.65rem;
+    text-decoration: none;
+    padding: 0 2px;
+    
+    background-color: #A0281F; /* Default: Dark Red */
+    color: white;              /* Default: White Text */
+    
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+/* 4. Active State (SELECTED PAGE) - WHITE BACKGROUND */
+.nav-pills a.active {
+    background-color: #ffffff !important; /* Force White */
+    color: #A0281F !important;            /* Text becomes Dark Red */
+    font-weight: 800;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transform: scale(1.02);               /* Slight pop */
+    border: none;
+}
+    /* 3. HERO */
+    .story-hero-card {
+        margin: 15px;
+        min-height: 380px;
+        border-radius: 30px;
+        padding: 25px;
+    }
+    .story-hero-card h1 { font-size: 2.5rem; }
+
+    /* 4. CAROUSEL WRAPPER (Horizontal Scroll) */
+    .carousel-wrapper {
+        display: flex;       
+        flex-direction: row; 
+        overflow-x: auto;    
+        gap: 15px;           
+        padding: 0 20px;      
+        margin-bottom: 20px;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none; 
+        width: 100%;
+    }
+    .carousel-wrapper::-webkit-scrollbar { display: none; }
+
+    /* 5. CAROUSEL CARDS */
+    .card-mission, .card-features {
+        min-width: 85%;
+        width: 85%;
+        height: 320px;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        border-radius: 25px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* 6. FOOTER */
+    .footer-card {
+        margin: 15px;
+        margin-bottom: 90px;
+        display: flex !important;
+        flex-direction: row !important; 
+        padding: 15px 20px;
+        gap: 5px;
+    }
+}
