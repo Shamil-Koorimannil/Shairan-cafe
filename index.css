@@ -21,7 +21,7 @@
         "header header header"
         "hero   hero   sidebar"
         "info   gallery sidebar"
-        "footer footer footer"; /* <--- NEW AREA */
+        "footer footer footer";
         
     position: relative;
 }
@@ -34,7 +34,6 @@ a{
 .hero-card, .sidebar-card, .info-card, .gallery-card {
     background-color: var(--card-bg);
     border-radius: var(--radius);
-    padding: 20px;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -42,56 +41,7 @@ a{
 
 /* 1. HEADER */
 /* --- UNIVERSAL DESKTOP HEADER (Paste this in all CSS files) --- */
-.header-card {
-    grid-area: header;
-    height: 100%;
-    width: 100%;
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px; /* Standard Padding */
-    position: relative;
-    z-index: 1000;
-}
 
-.logo-circle {
-    width: 60px;
-    height: 60px; /* Fixed height for consistency */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.nav-pills {
-    background-color: var(--bg-color);
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.nav-pills a {
-    text-decoration: none;
-    color: var(--accent);
-    padding: 5px 20px;
-    border-radius: var(--radius);
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.nav-pills a.active{
-    background-color: var(--accent);
-    color: var(--bg-color);
-}
 
 /* --- SPECIFIC AREA STYLING --- */
 
@@ -105,7 +55,7 @@ a{
 
 .hero-card {
     grid-area: hero;
-    background-image: url('../assets/images/Tea-bg.png');
+    background-image: url('../assets/images/hero-Iran.png');
     background-size: cover;      /* Fills the entire area */
     background-position: center; /* Keeps the focus in the middle */
     background-repeat: no-repeat;
@@ -119,7 +69,17 @@ a{
     color: var(--text-color);
     margin-bottom: 10px;
     font-family: 'Hidayatullah', sans-serif;
+    text-shadow: none;
+    margin-top: 60px;
+    margin-left: 30px;
 
+}
+.hero-text p {
+    font-size: 0.6rem;
+    line-height: 1.4;
+    max-width: 300px;
+    margin-left: 30px;
+    margin-bottom: 60px;
 }
 
 .hero-image-placeholder {
@@ -127,6 +87,9 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.hero-text span {
+    color: var(--card-bg);
 }
 
 .icon {
@@ -151,7 +114,7 @@ a{
     grid-area: sidebar;
     justify-content: center;
     align-items: center;
-    background-image: url('../assets/images/shairan-single.png');
+    background-image: url('../assets/images/Shairan cafe - bun muska.jpg');
     background-size: cover;      /* Fills the entire area */
     background-position: center; /* Keeps the focus in the middle */
     background-repeat: no-repeat;
@@ -162,6 +125,8 @@ a{
     grid-area: info;
     flex-direction: column;
     justify-content: space-between;
+    background-image: url('../assets/images/bg-3.png');
+
 }
 
 .mini-action {
@@ -174,7 +139,8 @@ a{
     border-bottom-left-radius: 0px;
     border-radius: 30px;
     border: 10px solid var(--bg-color);
-        transition: 0.3s;
+    transition: 0.3s;
+    background-image: url('../assets/images/bg-3.png');
 
 }
 .mini-action:hover {
@@ -232,7 +198,7 @@ a{
     background-color: var(--card-bg);
     border: 12px solid var(--bg-color);
     border-radius: 50%;
-    background-image: url('../assets/images/Osmania.png');
+    background-image: url('../assets/images/Bg.jpg');
 
     /* ----- THE KEY CHANGE ----- */
     background-origin: border-box; /* Tells the image to start from the outer edge of the border */
@@ -254,236 +220,178 @@ a{
     cursor: pointer;
 }
 
+.info-content h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-align: left;
+    margin: 30px 30px 0px 30px;
+    font-family: 'Hidayatullah', sans-serif;
+}
+.info-content p {
+    font-size: 0.5rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    text-align: left;
+    width: 50%;
+    margin-left: 30px;
+}
 
 
 
 
-
-
-
-/* --- MOBILE LAYOUT (Stable Grid + Original Cutout Style) --- */
 @media (max-width: 768px) {
     
-    /* 1. Main Grid Container */
+    /* 1. GLOBAL RESET (Fixes the "Out of Viewport" width issue) */
+    body {
+        padding: 0;
+        overflow-x: hidden; /* Prevents side-scrolling */
+    }
+
+    /* 2. MAIN GRID CONTAINER */
     .main-container {
         display: grid;
         height: auto;
         min-height: 100vh;
         width: 100%;
         box-sizing: border-box;
-        gap: 15;
         
-        /* STABLE ROW HEIGHTS:
-           Row 1: Hero (220px)
-           Row 2: Gallery (200px)
-           Row 3: Info Text Area (160px)
-           Row 4: Info Button Area (60px) <--- Dedicated height for the button
-           Row 5: Footer (70px)
+        /* FIX: Added 'px' to gap, reduced padding slightly */
+        padding: 10px; 
+        gap: 10px;
+        
+        /* UPDATED ROWS:
+           Row 1: Hero (Changed to 35vh to fit screen better)
+           Row 2: Gallery (220px)
+           Row 3: Info Text (Auto - grows with text)
+           Row 4: Info Button (60px)
+           Row 5: Footer (Auto)
            Row 6: Spacer (90px)
         */
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 220px 200px 160px 60px auto 90px;
+        grid-template-rows: 35vh 220px auto 60px auto 90px;
         
         grid-template-areas: 
             "hero    hero"
             "gallery gallery"
-            "info    sidebar" /* Info Card starts here */
-            "info    sidebar" /* Info Card ends here (Spans 2 rows) */
+            "info    sidebar" 
+            "info    sidebar"
             "footer  footer"
             ".       .";
             
         position: relative;
     }
 
-/* REPLACE THIS: .header-card { display: none; } */
-    /* WITH THIS: */
- /* 1. Fix the Header Container */
-    /* We make it invisible to clicks so it doesn't block the screen, 
-       but we REMOVE 'display: none' so the content inside (navbar) still exists. */
+    /* --- HEADER (Hidden Wrapper) --- */
     .header-card {
-    height: 0;
-    padding: 0;
-    margin: 0;
-    pointer-events: none; /* Allows clicking "through" the empty header */
-    overflow: visible;    /* Allows the navbar to float outside */
-    z-index: 9999;
-    background: transparent;
-    display: flex;        /* Ensures the child (nav) is rendered */
-}
-
-/* Hide logo on mobile */
-.logo-circle { display: none; }
-
-/* 2. The Navbar (Floating Container) */
-.nav-pills {
-    position: fixed;       /* Locks it to the screen */
-    bottom: 30px;          /* Distance from bottom */
-    left: 50%;
-    transform: translateX(-50%); /* Centers it perfectly */
-    
-    width: 96%;
-    max-width: 400px;
-    height: 50px;
-
-    background-color: #F37021; /* Brand Orange Container */
-    border-radius: 50px;
-    padding: 5px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 3px;
-
-    z-index: 10000;        /* Sits on top of everything */
-    pointer-events: auto;  /* RE-ENABLES CLICKING */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-/* 3. The Navigation Buttons */
-.nav-pills a {
-    flex: 1;
-    font-size: 0.65rem;
-    text-decoration: none;
-    padding: 0 2px;
-    
-    background-color: #A0281F; /* Default: Dark Red */
-    color: white;              /* Default: White Text */
-    
-    border-radius: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s ease;
-}
-
-/* 4. Active State (SELECTED PAGE) - WHITE BACKGROUND */
-.nav-pills a.active {
-    background-color: #ffffff !important; /* Force White */
-    color: #A0281F !important;            /* Text becomes Dark Red */
-    font-weight: 800;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    transform: scale(1.02);               /* Slight pop */
-    border: none;
-}
-
-    /* OPTIONAL: Tiny Phone Adjustment (iPhone 5/SE) */
-    @media (max-width: 360px) {
-        .nav-pills a {
-            font-size: 0.65rem; /* Smaller font for very small screens */
-        }
+        height: 0; padding: 0; margin: 0;
+        pointer-events: none; overflow: visible;
+        z-index: 9999; background: transparent; display: flex;
     }
-    /* 4. CONTENT BLOCKS */
+    .logo-circle { display: none; }
 
+    /* --- HERO CARD (First Block Fix) --- */
     .hero-card {
         grid-area: hero;
         border-radius: var(--radius);
         border-bottom-left-radius: var(--radius);
+        
+        /* Ensure background fits */
+        background-size: cover;
+        background-position: center;
+        
+        /* Align content to bottom-left */
+        align-items: flex-start; 
+        justify-content: flex-start;
     }
-    .hero-text h1 { font-size: 2.2rem; margin-top: 10px; }
 
+    /* FIX: Reduced Font Size & Margins for Mobile */
+    .hero-text {
+        width: 100%;
+        padding: 20px; /* Adds space from edges */
+    }
+
+    .hero-text h1 { 
+        font-size: 2rem; /* Smaller than desktop */
+        line-height: 1.1;
+        margin: 0 0 5px 0; /* REMOVED the 60px top margin */
+    }
+
+    .hero-text p {
+        font-size: 0.75rem; /* Readable small text */
+        line-height: 1.3;
+        max-width: 90%;
+        margin: 0; /* Remove massive margins */
+        display: block; /* Ensure it shows */
+    }
+
+    /* --- GALLERY --- */
     .gallery-card {
         grid-area: gallery;
         border-radius: var(--radius);
     }
     .slideshow-container img { border-radius: var(--radius); }
 
-    /* --- INFO CARD (Spans 2 Rows to fit Text + Button) --- */
+    /* --- INFO CARD (Text Layout Fix) --- */
     .info-card {
         grid-area: info;
         background-color: var(--card-bg);
         border-radius: var(--radius);
-        
-        /* Remove padding from parent so button touches edges */
         padding: 0;
-        
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        overflow: hidden; 
+        display: flex; flex-direction: column; justify-content: space-between;
+        position: relative; overflow: hidden; 
     }
 
-    /* Text gets padding */
+    /* Reduced padding to fit small screens */
     .info-content {
-        padding: 25px;
-        padding-bottom: 0; /* No bottom padding needed, button handles spacing */
+        padding: 15px; 
+        padding-bottom: 0;
     }
 
     .info-content h1 {
-        font-size: 1.6rem;
-        line-height: 1.1;
-        font-weight: 900;
-        color: black;
-        text-align: left;
-        margin: 0;
-        margin-top: 10px;
-    }
-
-    /* --- RESTORED "CUTOUT" STYLE BUTTON --- */
-    .info-card a {
-        display: block;
-        width: 100%;
-        height: 60px; /* Exact height of Row 4 */
-        z-index: 10;
-        text-decoration: none;
-        margin-top: auto; /* Push to bottom */
-    }
-
-    .mini-action {
-        /* ORIGINAL STYLES RESTORED */
-        position: relative !important;
-        width: 50% !important;
-        height: 100% !important;
-        
-        background-color: var(--card-bg) !important;
-        /* Rounded Top Corners Only */
-        border-radius: var(--radius) !important; 
-        border: 10px solid var(--bg-color) !important;
-        
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        /* Reset positioning */
-        left: 55% !important;
-        bottom: -5% !important;
-        margin: 0 !important;
+        font-size: 1rem; /* Smaller Heading */
+        margin: 0 0 5px 0; /* Reset margins */
     }
     
-    .mini-action span { 
-        color: var(--text-color); 
-        font-weight: 800; 
-        font-size: 1rem;
-        text-align: center;
+    .info-content p {
+        font-size: 0.65rem; /* Tiny description text */
+        width: 100%; /* Use full width */
+        margin: 0;
     }
 
-    /* Sidebar (Character) */
+    /* Info Button */
+    .info-card a {
+        display: block; width: 100%; height: 60px;
+        z-index: 10; text-decoration: none; margin-top: auto;
+    }
+    .mini-action {
+        position: relative !important; width: 50% !important; height: 100% !important;
+        background-color: var(--card-bg) !important;
+        border-radius: var(--radius) !important; 
+        border: 10px solid var(--bg-color) !important;
+        display: flex; align-items: center; justify-content: center;
+        left: 55% !important; bottom: -5% !important; margin: 0 !important;
+    }
+    .mini-action span { 
+        color: var(--text-color); font-weight: 800; font-size: 0.9rem; text-align: center;
+    }
+
+    /* --- SIDEBAR --- */
     .sidebar-card {
         grid-area: sidebar;
         border-radius: var(--radius);
         background-color: var(--card-bg);
     }
 
-    /* Footer */
-
-    /* 5. Central Badge (Anchored to Grid) */
+    /* --- FLOATING BADGE (Position Fix) --- */
     .floating-badge {
-        display: flex;
-        position: absolute;
-        width: 70px; 
-        height: 70px;
-        
-        /* Top Calculation:
-           Hero (220) + Gap (15) + Gallery (200) = 435px.
-           We want the badge centered on the gap below the Gallery.
-           435px + (15px / 2) = 442.5px
-        */
-        top: 40%; 
-        left: 37%;
+        display: flex; position: absolute;
+        width: 70px; height: 70px;
+        /* Positioned between Hero (35vh) and Gallery */
+        top: 59vh; 
+        left: 40%; /* Move to right side */
         transform: translate(-50%, -50%);
-        z-index: 50;
-        border: 6px solid var(--bg-color);
-        background-size: cover;
-        box-shadow: none;
+        z-index: 50; border: 6px solid var(--bg-color);
+        background-size: cover; box-shadow: none;
     }
 }

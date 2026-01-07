@@ -54,28 +54,6 @@
     object-fit: contain;
 }
 
-.nav-pills {
-    background-color: var(--bg-color);
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.nav-pills a {
-    text-decoration: none;
-    color: var(--accent);
-    padding: 5px 20px;
-    border-radius: var(--radius);
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.nav-pills a.active {
-    background-color: var(--accent);
-    color: var(--bg-color);
-}
 
 /* --- HERO SECTION --- */
 .story-hero-card {
@@ -178,17 +156,7 @@
     color: white;
 }
 
-/* --- FOOTER --- */
-.footer-card {
-    grid-area: footer;
-    background-color: var(--card-bg);
-    border-radius: var(--radius);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-}
+
 
 
 
@@ -210,74 +178,12 @@
         overflow-x: hidden;
     }
 
-    /* 1. HEADER (Invisible Wrapper) */
 
-/* 1. Header Container (Invisible Wrapper) */
-.header-card {
-    height: 0;
-    padding: 0;
-    margin: 0;
-    pointer-events: none; /* Allows clicking "through" the empty header */
-    overflow: visible;    /* Allows the navbar to float outside */
-    z-index: 9999;
-    background: transparent;
-    display: flex;        /* Ensures the child (nav) is rendered */
-}
+
 
 /* Hide logo on mobile */
 .logo-circle { display: none; }
 
-/* 2. The Navbar (Floating Container) */
-.nav-pills {
-    position: fixed;       /* Locks it to the screen */
-    bottom: 30px;          /* Distance from bottom */
-    left: 50%;
-    transform: translateX(-50%); /* Centers it perfectly */
-    
-    width: 96%;
-    max-width: 400px;
-    height: 50px;
-
-    background-color: #F37021; /* Brand Orange Container */
-    border-radius: 50px;
-    padding: 5px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 3px;
-
-    z-index: 10000;        /* Sits on top of everything */
-    pointer-events: auto;  /* RE-ENABLES CLICKING */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-/* 3. The Navigation Buttons */
-.nav-pills a {
-    flex: 1;
-    font-size: 0.65rem;
-    text-decoration: none;
-    padding: 0 2px;
-    
-    background-color: #A0281F; /* Default: Dark Red */
-    color: white;              /* Default: White Text */
-    
-    border-radius: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s ease;
-}
-
-/* 4. Active State (SELECTED PAGE) - WHITE BACKGROUND */
-.nav-pills a.active {
-    background-color: #ffffff !important; /* Force White */
-    color: #A0281F !important;            /* Text becomes Dark Red */
-    font-weight: 800;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    transform: scale(1.02);               /* Slight pop */
-    border: none;
-}
     /* 3. HERO */
     .story-hero-card {
         margin: 15px;
@@ -317,13 +223,5 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    /* 6. FOOTER */
-    .footer-card {
-        margin: 15px;
-        margin-bottom: 90px;
-        display: flex !important;
-        flex-direction: row !important; 
-        padding: 15px 20px;
-        gap: 5px;
-    }
+
 }

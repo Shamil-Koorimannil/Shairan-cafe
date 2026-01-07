@@ -54,14 +54,6 @@
     object-fit: contain;
 }
 
-.nav-pills {
-    background-color: var(--bg-color);
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
 
 
 
@@ -283,59 +275,6 @@
         overflow: hidden; 
     }
 
-    /* 2. HEADER (Invisible Wrapper) */
-    .header-card {
-        height: 0;
-        padding: 0;
-        margin: 0;
-        pointer-events: none;
-        overflow: visible;
-        z-index: 999;
-        background: transparent;
-        display: flex; 
-    }
-    .logo-circle { display: none; }
-
-    /* 3. NAVBAR (Fixed Bottom) */
-    .nav-pills {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 96%;
-        max-width: 400px;
-        height: 60px;
-        background-color: #F37021;
-        border-radius: 50px;
-        padding: 5px;
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        gap: 3px;
-        z-index: 10000;
-        pointer-events: auto;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    .nav-pills a {
-        flex: 1;
-        font-size: 0.65rem;
-        text-decoration: none;
-        padding: 0 2px;
-        background-color: #A0281F;
-        color: white;
-        border-radius: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .nav-pills a.active {
-        background-color: #ffffff !important;
-        color: #A0281F !important;
-        font-weight: 800;
-    }
-
     /* 4. THE PRODUCT STAGE (The Orange Card) */
     .product-stage {
         width: 85%;
@@ -437,21 +376,4 @@
     .prev { left: -20px; }
     .next { right: -20px; }
 
-
-    /* --- FOOTER (Same Mobile Layout) --- */
-    .footer-card {
-        margin: 15px; margin-bottom: 90px;
-        display: flex !important; flex-direction: row !important;
-        justify-content: space-between; align-items: center;
-        padding: 15px 20px; gap: 5px;
-    }
-    .footer-brand, .footer-social, .footer-copyright { width: auto !important; margin: 0; }
-    .footer-brand { flex: 1; font-size: 0.6rem; font-weight: 800; }
-    .footer-social { flex: 1; justify-content: center; gap: 10px; }
-    .footer-copyright { flex: 1; font-size: 0.5rem; text-align: right; }
-    .footer-social a svg { width: 16px; height: 16px; }
-    
-    /* Copyright Logo Fix */
-    .footer-copyright { flex-direction: column; align-items: flex-end; }
-    .footer-copyright img { width: auto !important; height: auto !important; max-height: 20px; }
 }

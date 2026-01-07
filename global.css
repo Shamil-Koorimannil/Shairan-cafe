@@ -38,7 +38,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
     overflow-x: hidden;
 }
 
@@ -49,74 +48,138 @@ body {
     transform: translateZ(0); 
 }
 
+.header-card {
+    grid-area: header;
+    height: 100%;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px; /* Standard Padding */
+    position: relative;
+    z-index: 1000;
+    background-image: url('../assets/images/nav-img.png');
+
+}
+
+.logo-circle {
+    width: 60px;
+    height: 60px; /* Fixed height for consistency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-pills {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 50px;
+    border: 2px solid var(--bg-color);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav-pills a {
+    text-decoration: none;
+    color: var(--bg-color);
+    padding: 5px 20px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.nav-pills a.active{
+    background-color: transparent;
+    color: var(--bg-color);
+    border: 1px solid var(--bg-color);
+}
+
+
+
 
 /* =========================================
    GLOBAL FOOTER STYLES (Finalized)
    ========================================= */
+
 .footer-card {
     grid-area: footer;
     background-color: var(--card-bg);
-    border-radius: 50px; /* Fully rounded on desktop */
-    
+    border-radius: 50px; 
+    background-image: url('../assets/images/nav-img.png');
     display: flex;
     align-items: center;
-    padding: 0; /* Let children handle padding */
+    padding: 0; 
     color: var(--text-color);
-    box-shadow: 0 4px 10px rgba(243, 112, 33, 0.3);
     overflow: hidden; 
-    
-    /* Ensure minimum height */
     min-height: 80px;
 }
 
-/* Common Styles */
-.footer-brand, .footer-social, .footer-copyright {
+/* 1. Common Flex Properties (Updated) */
+/* ADDED .footer-shairan here so it behaves like the others */
+.footer-brand, .footer-social, .footer-copyright, .footer-shairan {
     flex: 1; 
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; 
+    position: relative; /* Essential for the line to stick */
 }
 
-/* 1. BRAND (Left) */
+/* 2. BRAND (Left Block) - Contains Email & Social inside */
 .footer-brand { 
     font-size: 0.7rem; 
-    font-weight: 800; 
     color: var(--bg-color); 
-    text-align: left;
-    padding-left: 30px;      /* ADDED: Breathing room */
-    justify-content: flex-start;
-    font-family: 'Poppins', sans-serif;
+    padding-left: 30px; 
+    justify-content: flex-start; /* Aligns content to the left */
+    gap: 20px; /* Space between Email and Social Links */
 }
 
-/* 2. SOCIAL (Middle) */
+.footer-email {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-social { 
-    flex: 1; 
-    justify-content: center; 
-    gap: 15px; 
+    /* Overriding Common Style: This is now INSIDE footer-brand, not a main block */
+    flex: none; /* Don't stretch */
+    gap: 10px;
 }
-.footer-social a svg { 
-    width: 18px; 
-    height: 18px; 
+.footer-social a{
+    display: flex;
+    margin-top: 10px;
+}
+/* 3. MIDDLE (Copyright Text) */
+.footer-shairan {
+    font-size: 0.6rem; 
     color: var(--bg-color); 
-    transition: 0.3s;
+    /* The separator line will attach to the right side of this box */
 }
-.footer-social a:hover svg { transform: scale(1.2); }
 
-/* 3. COPYRIGHT (Right) */
+/* 4. RIGHT (Powered By) */
 .footer-copyright { 
     font-size: 0.6rem; 
     opacity: 0.8; 
     color: var(--bg-color); 
-    text-align: right; 
-    padding-right: 30px;     /* ADDED: Breathing room */
-    justify-content: flex-end;
+    padding-right: 30px; 
+    justify-content: flex-end; /* Aligns content to the right */
 }
+.footer-copyright span {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+/* --- SEPARATORS --- */
 
-/* Separators (Lines) */
-.footer-brand::after, 
-.footer-social::after {
+/* Line 1: After the Brand/Social Section (Left) */
+.footer-brand::after {
     content: "";
     position: absolute;
     right: 0;        
@@ -126,12 +189,32 @@ body {
     background-color: rgba(255, 255, 255, 0.4); 
 }
 
-
+/* Line 2: After the Shairan Text Section (Middle) */
+.footer-shairan::after {
+    content: "";
+    position: absolute;
+    right: 0;        
+    top: 25%;        
+    height: 50%;     
+    width: 1px;      
+    background-color: rgba(255, 255, 255, 0.4); 
+}
 /* =========================================
    GLOBAL MOBILE FOOTER
    ========================================= */
 @media (max-width: 768px) {
-
+body {
+        /* 1. Remove Padding */
+        padding: 0; 
+        
+        /* 2. CRITICAL FIX: Disable Flex Centering */
+        display: block; 
+        
+        /* 3. Allow Scrolling */
+        height: auto; 
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
     .footer-card {
         margin: 15px;
         margin-bottom: 90px; /* Space for Floating Nav */
@@ -198,5 +281,30 @@ body {
         
         margin-top: 5px;
         object-fit: contain;
+    }
+
+
+
+        /* --- NAVBAR --- */
+    .nav-pills {
+        position: fixed; bottom: 30px; left: 50%;
+        transform: translateX(-50%);
+        width: 96%; max-width: 400px; height: 50px;
+        background-image: url('assets/images/nav-img.png');
+        border-radius: 50px; padding: 5px;
+        display: flex; justify-content: space-between; align-items: stretch;
+        gap: 3px; z-index: 10000; pointer-events: auto;
+                border: 2px solid var(--bg-color);
+
+    }
+    .nav-pills a {
+        flex: 1; font-size: 0.65rem; text-decoration: none; padding: 0 2px;
+        background-color: transparent; color: white;
+        border-radius: 40px; display: flex; align-items: center; justify-content: center;
+        transition: 0.2s ease;
+    }
+    .nav-pills a.active {
+        border: 1px solid var(--bg-color);
+        transform: scale(1.02); 
     }
 }

@@ -56,14 +56,6 @@
     object-fit: contain;
 }
 
-.nav-pills {
-    background-color: var(--bg-color);
-    padding: 10px;
-    border-radius: 50px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
 
 /* --- CARD GENERIC STYLE --- */
 .card {
@@ -182,15 +174,7 @@
 }
 .bottom-right { bottom: 20px; right: 20px; } /* Kept inside card for cleanliness */
 .top-right { top: 20px; right: 20px; }
-.footer-card {
-    grid-area: footer; /* Crucial: Tells footer to go to the bottom slot */
-    background-color: var(--card-bg); /* Optional: Keeps it consistent */
-    border-radius: var(--radius);
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+
 
 /* --- MOBILE FIX --- */
 @media (max-width: 768px) {
@@ -202,71 +186,7 @@
         width: 90%;
         margin: 0 auto;
     }
-    .header-card {
-    height: 0;
-    padding: 0;
-    margin: 0;
-    pointer-events: none; /* Allows clicking "through" the empty header */
-    overflow: visible;    /* Allows the navbar to float outside */
-    z-index: 9999;
-    background: transparent;
-    display: flex;        /* Ensures the child (nav) is rendered */
-}
 
-/* Hide logo on mobile */
-.logo-circle { display: none; }
-
-/* 2. The Navbar (Floating Container) */
-.nav-pills {
-    position: fixed;       /* Locks it to the screen */
-    bottom: 30px;          /* Distance from bottom */
-    left: 50%;
-    transform: translateX(-50%); /* Centers it perfectly */
-    
-    width: 96%;
-    max-width: 400px;
-    height: 50px;
-
-    background-color: #F37021; /* Brand Orange Container */
-    border-radius: 50px;
-    padding: 5px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 3px;
-
-    z-index: 10000;        /* Sits on top of everything */
-    pointer-events: auto;  /* RE-ENABLES CLICKING */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-/* 3. The Navigation Buttons */
-.nav-pills a {
-    flex: 1;
-    font-size: 0.65rem;
-    text-decoration: none;
-    padding: 0 2px;
-    
-    background-color: #A0281F; /* Default: Dark Red */
-    color: white;              /* Default: White Text */
-    
-    border-radius: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s ease;
-}
-
-/* 4. Active State (SELECTED PAGE) - WHITE BACKGROUND */
-.nav-pills a.active {
-    background-color: #ffffff !important; /* Force White */
-    color: #A0281F !important;            /* Text becomes Dark Red */
-    font-weight: 800;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    transform: scale(1.02);               /* Slight pop */
-    border: none;
-}
     .stat-box { height: 150px; }
     .big-form-box { height: auto; padding: 30px; }
     .form-layout { flex-direction: column; }
@@ -303,52 +223,5 @@
         width: 100%;
         margin-top: 5px;
     }
-    .footer-card {
-        margin: 15px;
-        margin-bottom: 90px; /* Space for Floating Nav */
-        
-        /* 1. FORCE ROW DIRECTION */
-        display: flex !important;
-        flex-direction: row !important; 
-        justify-content: space-between; /* Spread items out */
-        align-items: center;
-        
-        padding: 15px 20px;
-        gap: 5px;
-        text-align: left;
-    }
 
-    /* 2. MAKE ITEMS FIT SIDE-BY-SIDE */
-    .footer-brand, .footer-social, .footer-copyright {
-        width: auto !important; /* Stop taking full width */
-        margin: 0;
-        display: flex;
-        align-items: center;
-    }
-
-    /* 3. RESIZE TEXT TO FIT MOBILE ROW */
-    .footer-brand { 
-        font-size: 0.6rem; 
-        font-weight: 800;
-        flex: 1; /* Brand on left */
-    }
-    
-    .footer-social {
-        flex: 1; 
-        justify-content: center; /* Icons in middle */
-        gap: 10px;
-    }
-    
-    .footer-copyright {
-        flex: 1;
-        font-size: 0.5rem; 
-        justify-content: flex-end; /* Copyright on right */
-        text-align: right;
-    }
-    
-    /* Resize Icons slightly */
-    .footer-social a svg {
-        width: 16px;
-        height: 16px;
-    }
 }
