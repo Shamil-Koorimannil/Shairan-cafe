@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 1. SELECTOR LOGIC (Strict Filtering) ---
     // Grab all grid items
-    const allGridItems = document.querySelectorAll('.main-container > *');
-    
+// Select direct children, BUT skip the wrapper and grab its insides instead
+const allGridItems = document.querySelectorAll('.main-container > *:not(.carousel-wrapper), .carousel-wrapper > *');    
     // Filter out Header, Header Card, and Floating Badge
     // We ONLY want to animate the content (Hero, Cards, Footer, etc.)
     const contentToAnimate = Array.from(allGridItems).filter(el => {
