@@ -32,7 +32,6 @@ a{
 
 /* --- GENERIC CARD STYLING --- */
 .hero-card, .sidebar-card, .info-card, .gallery-card {
-    background-color: var(--card-bg);
     border-radius: var(--radius);
     overflow: hidden;
     position: relative;
@@ -129,11 +128,14 @@ a{
 
 }
 
+    .info-content span {
+        color: var(--card-bg);
+    }
+    
 .mini-action {
     position: absolute;
     bottom: -10px;
     right: -10px;    
-    background-color: var(--card-bg);
     height: 30%;
     width: 50%;
     border-bottom-left-radius: 0px;
@@ -169,10 +171,12 @@ a{
 }
 
 /* Ensure the slideshow container also fills the parent */
+/* --- GALLERY SLIDESHOW --- */
 .slideshow-container {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden; /* Important so the zoom doesn't spill out */
 }
 
 .slide {
@@ -182,20 +186,16 @@ a{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    
+    /* GSAP will handle opacity, so we start hidden */
+    opacity: 0; 
+    /* Remove the old 'transition' property here! */
 }
-
-.slide.active {
-    opacity: 1;
-}
-
 /* 6. FLOATING CIRCLE BADGE */
 .floating-badge {
     position: absolute;
     width: 100px;
     height: 100px;
-    background-color: var(--card-bg);
     border: 12px solid var(--bg-color);
     border-radius: 50%;
     background-image: url('../assets/images/Bg.jpg');
@@ -249,13 +249,14 @@ a{
     .main-container {
         display: grid;
         height: auto;
-        min-height: 100vh;
+        min-height: 100%;
         width: 100%;
         box-sizing: border-box;
         
         /* FIX: Added 'px' to gap, reduced padding slightly */
-        padding: 10px; 
+        padding-left: 20px; 
         gap: 10px;
+        margin-top: 10px;
         
         /* UPDATED ROWS:
            Row 1: Hero (Changed to 35vh to fit screen better)
@@ -266,7 +267,7 @@ a{
            Row 6: Spacer (90px)
         */
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 35vh 220px auto 60px auto 90px;
+        grid-template-rows: 35vh 220px auto 60px auto;
         
         grid-template-areas: 
             "hero    hero"
@@ -294,7 +295,7 @@ a{
         
         /* ADJUST POSITION HERE */
         /* top | right | bottom | left */
-        padding: 60px 20px 20px 40px; 
+        padding: 35px 20px 20px 25px; 
         
         /* Explanation:
            60px Top  -> Pushes it down
@@ -326,7 +327,6 @@ a{
     /* --- INFO CARD (Text Layout Fix) --- */
     .info-card {
         grid-area: info;
-        background-color: var(--card-bg);
         border-radius: var(--radius);
         padding: 0;
         display: flex; flex-direction: column; justify-content: space-between;
@@ -360,7 +360,6 @@ a{
     }
     .mini-action {
         position: relative !important; width: 50% !important; height: 100% !important;
-        background-color: var(--card-bg) !important;
         border-radius: var(--radius) !important; 
         border: 10px solid var(--bg-color) !important;
         display: flex; align-items: center; justify-content: center;
@@ -374,18 +373,35 @@ a{
     .sidebar-card {
         grid-area: sidebar;
         border-radius: var(--radius);
-        background-color: var(--card-bg);
     }
 
     /* --- FLOATING BADGE (Position Fix) --- */
-    .floating-badge {
-        display: flex; position: absolute;
-        width: 70px; height: 70px;
-        /* Positioned between Hero (35vh) and Gallery */
-        top: 59vh; 
-        left: 40%; /* Move to right side */
+.floating-badge {
+        display: flex;
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        
+        /* --- VERTICAL POSITION (Bottom of Slideshow) --- */
+        /* Hero(35vh) + Gallery(220px) + Gap(10px) + TopPadding(10px) = 35vh + 240px */
+        top: calc(30vh + 240px); 
+        
+        /* --- HORIZONTAL CENTER --- */
+        /* Since padding-left is 20px and padding-right is roughly 10px */
+        /* We add 5px to the center to compensate for the shift */
+        left: calc(40% + 5px); 
+
+        /* --- THE HALF-OVERFLOW MAGIC --- */
+        /* This centers the badge on the line we calculated above */
         transform: translate(-50%, -50%);
-        z-index: 50; border: 6px solid var(--bg-color);
-        background-size: cover; box-shadow: none;
+        
+        z-index: 50;
+        border: 6px solid var(--bg-color);
+        background-size: cover;
+        box-shadow: none;
+        
+        /* Ensure it's not clickable if it covers buttons, 
+           remove this line if the badge is a button */
+        pointer-events: auto; 
     }
 }

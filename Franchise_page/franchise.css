@@ -156,52 +156,84 @@
 .top-right { top: 20px; right: 20px; }
 
 
+
+
 /* --- MOBILE FIX --- */
 @media (max-width: 768px) {
-    body { height: auto; overflow-y: auto; display: block; padding: 20px 0;}
+    
+    /* 1. HIDE THE TOP HEADER */
+.header-card {
+        background: transparent !important; /* No background image/color */
+        height: 0 !important;               /* No height */
+        padding: 0 !important;              /* No padding */
+        margin: 0 !important;
+        border: none !important;
+        pointer-events: none;               /* Let clicks pass through the empty top area */
+        overflow: visible !important;       /* Allow the fixed nav to stick out */
+    }
+
+    /* 2. Hide the Logo specifically */
+    .logo-circle {
+        display: none !important;
+    }
+
+    /* 3. Ensure Bottom Nav is Clickable */
+    .nav-pills {
+        pointer-events: auto; /* Re-enable clicking on the buttons */
+        /* Note: Position fixed is already handled in your global.css */
+    }
+
+    /* ... (Rest of your mobile styles for form/stats) ... */
     .main-container {
         height: auto;
         display: flex;
         flex-direction: column;
         width: 90%;
         margin: 0 auto;
+        padding-top: 20px;
     }
 
+    /* 2. Container Adjustments */
+    .main-container {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 20px; /* Add some space at top since header is gone */
+    }
+
+    /* ... (Keep your existing Stat Box & Form styles below) ... */
     .stat-box { height: 150px; }
     .big-form-box { height: auto; padding: 30px; }
     .form-layout { flex-direction: column; }
-    /* --- FOOTER (Flex Row Layout) --- */
+    
     .form-row {
         display: flex;
-        flex-direction: row; /* Force side-by-side */
-        gap: 10px;           /* Reduce gap to fit on small screens */
+        flex-direction: row; 
+        gap: 10px;           
         width: 100%;
     }
 
-    /* 2. Intro Text Size */
     .form-intro h2 {
         font-size: 2.5rem;
         margin-bottom: 10px;
     }
     
-    /* 3. Input Containers */
     .input-wrapper {
-        flex: 1;             /* Each takes exactly 50% */
-        min-width: 0;        /* Prevents overflow if text is long */
+        flex: 1;            
+        min-width: 0;        
     }
 
-    /* 4. Input Styling for Mobile */
     .input-wrapper input, .input-wrapper textarea {
         width: 100%;
         box-sizing: border-box;
-        font-size: 0.8rem;   /* Slightly smaller text to prevent cutting off */
-        padding: 10px;       /* Compact padding */
+        font-size: 0.8rem;   
+        padding: 10px;       
     }
     
-    /* 5. Message Box (Full Width) */
     .input-wrapper.full {
         width: 100%;
         margin-top: 5px;
     }
-
 }

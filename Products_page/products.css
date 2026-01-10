@@ -75,13 +75,22 @@
 #product-title span {
     color: #eb6d2f;
 }
+
+.product-logo{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 80px;
+    height: 80px;
+    z-index: 10;
+}
 /* 4. CONTENT STYLING (Matching Reference) */
 
 /* Bubbly Background Text */
 .bg-text {
     position: absolute;
-    top: 20%; /* Moved up slightly */
-    left: 50%;
+    top: 28%; /* Moved up slightly */
+    right: -10%;
     transform: translate(-50%, -50%);
     font-size: 13rem;
     font-weight: 900;
@@ -104,7 +113,7 @@
     overflow: hidden; 
     
     /* Remove old background colors/images */
-    
+    background-color: transparent;
     /* Flex is no longer needed for centering since we use absolute positioning */
     display: block; 
 }
@@ -140,12 +149,11 @@
 }
 
 /* --- 3. LAYER THE CONTENT ON TOP --- */
-
-/* The Giant Background Text (e.g., "CHAI") */
 .bg-text {
     z-index: 1; /* Sits on top of the image */
     opacity: 0.15; /* Make it subtle */
     mix-blend-mode: overlay; /* Cool effect blending with the image */
+
 }
 
 /* The Title & Description */
@@ -167,10 +175,9 @@
 /* Nav Buttons */
 .nav-arrow {
     z-index: 20; /* Must be clickable */
-    background: rgba(255,255,255,0.2); /* Semi-transparent glass effect */
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.5);
+    background-color: white;
 }
+
 #product-desc{
     font-size: 0.5rem;
     margin-bottom: 30px;
@@ -246,10 +253,7 @@
 }
 
 /* Hover Effect */
-.nav-arrow:hover {
-    transform: translateY(-50%) scale(1.1);
-    background-color: #6d0000; /* Slightly darker red on hover */
-}
+
 
 /* Position them exactly in the center of the cutout */
 .prev { left: 0px; } 
@@ -262,61 +266,80 @@
 
 
 
-
-
-
-
-
-
 /* =========================================
-   MOBILE LAYOUT (Final)
+   MOBILE LAYOUT (Transparent Navbar + Full BG)
    ========================================= */
 @media (max-width: 768px) {
 
-    /* 1. GRID FIX (Removes the top Header row) */
-    .main-container {
-        /* Only two rows: Stage (taking all space) + Footer */
-        grid-template-rows: 1fr 80px; 
+    /* 1. GRID (No space reserved for header) */
+.main-container {
+        /* Row 1: Stage (Takes remaining space) */
+        /* Row 2: Footer (Sizes automatically based on content + margins) */
+        grid-template-rows: 1fr auto; 
         
-        /* Remove "header" from the areas */
         grid-template-areas: 
             "stage"
             "footer";
             
         height: 100vh;
         gap: 0;
-    }
-
-    /* Force hide the header element & space */
-    .header-card, header {
-        display: none !important;
-    }
-
-    /* 2. THE STAGE (Full Card) */
-    .product-stage {
         width: 100%;
-        height: 100%; /* Fills the grid row completely */
-        margin: 0;
+    }
+
+    /* 2. TRANSPARENT FLOATING NAVBAR */
+    .header-card, header {
+        display: flex !important;
+        position: absolute; /* Float on top of image */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
         
+        background: transparent !important; /* See-through */
+        box-shadow: none !important; /* Remove shadow */
+        border: none !important;
+        
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 50; /* Ensure it stays on top of image */
+    }
+    
+    /* Scale down logo slightly for mobile */
+    .logo-circle {
+        display: none;
+    }
+
+    /* 3. THE STAGE (Full Screen) */
+    .product-stage {
+        grid-area: stage;
+        
+        /* Size of the card relative to the screen */
+        width: 90%; 
+        height: 85%; /* Slightly reduced to give breathing room from footer */
+        
+        /* --- THE CENTERING MAGIC --- */
+        align-self: center;   /* Centers vertically in the '1fr' row */
+        justify-self: center; /* Centers horizontally */
+        margin: 0;            /* Remove auto margins to let Grid handle alignment */
+        /* ------------------------- */
+
         display: block; 
         position: relative;
         overflow: hidden;
-        
-        border-radius: 0; /* Optional: Remove radius for full-screen feel, or keep var(--radius) */
-        border-radius: 30px;
-        
-        background-color: var(--card-bg); 
+        border-radius: var(--radius); 
         padding: 0;
+        
+        /* Optional: Add shadow to make it pop off the background */
     }
 
-    /* 3. THE IMAGE (Full Background) */
+    /* 4. THE IMAGE */
     .product-visual {
         position: absolute !important;
         top: 0;
         left: 0;
         width: 100% !important;
         height: 100% !important;
-        
         margin: 0 !important;
         padding: 0 !important;
         z-index: 0; 
@@ -326,24 +349,42 @@
     .product-visual img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Zooms to fill */
+        object-fit: cover; 
         filter: brightness(0.7);
     }
 
-    /* 4. TEXT (Bottom Left) */
+    /* 5. TEXT INFO */
     .product-info-float {
         position: absolute;
         z-index: 10;
-        
         bottom: 25px;
         left: 20px;
         top: auto;
         transform: none;
-        
         width: 65%; 
         text-align: left;
         padding: 0;
         margin: 0;
+    }
+.footer-card {
+        /* Top: 0 | Right: 15px | Bottom: 90px | Left: 15px */
+        /* The 90px bottom margin pushes the footer UP so it sits above your Nav Pills */
+        margin: 0px 15px 90px 15px !important;
+        
+        display: flex !important;
+        flex-direction: row !important; 
+        justify-content: space-between;
+        align-items: center;
+        
+        padding: 0 10px; 
+        gap: 2px;
+        
+        height: 50px; 
+        min-height: auto;
+        
+        /* Ensure it sits on top of the background image */
+        z-index: 40; 
+        position: relative;
     }
     
     .product-info-float h2 { 
@@ -358,16 +399,22 @@
         margin: 0;
         display: block;
     }
-
-    /* 5. BACKGROUND TEXT (Restored) */
+    #product-title{
+        font-size: 1.5rem;
+    }
+    #product-desc{
+        font-size: 0.4rem;
+        padding-right: 20px;
+        margin-bottom: 15px;
+    }
+    /* 6. BACKGROUND TEXT */
     .bg-text {
+        align-content: end;
         display: block !important;
         position: absolute;
-        top: 15%; 
-        left: 50%;
+        top: 25%; 
         transform: translate(-50%, -50%);
-        
-        font-size: 25vw; 
+        font-size: 20vw; 
         font-weight: 900;
         color: white;
         z-index: 1;
@@ -375,31 +422,27 @@
         pointer-events: none;
     }
 
-    /* 6. NAV ARROWS (Vertically Centered) */
+    /* 7. NAV ARROWS */
     .nav-arrow {
         position: absolute;
-        z-index: 20;
-        
+        z-index: 30;
         top: 50%; 
         transform: translateY(-50%);
         bottom: auto; 
-        
         width: 45px; 
         height: 45px;
-        
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: var(--bg-color);
         border-radius: 50%;
     }
-    
-    .prev { left: 10px; right: auto; }
-    .next { right: 10px; left: auto; }
 
-    /* 7. HIDE DECORATIONS */
-    .shape-corner, 
-    .side-cutout, 
-    .shape-notch,
+    .nav-arrow svg {
+        color: var(--accent);
+    }
+    .prev { left: -4%; right: auto; }
+    .next { right: -4%; left: auto; }
+
+    /* 8. HIDE DECORATIONS */
+    .shape-corner, .side-cutout, .shape-notch,
     .corner-tl, .corner-tr, .corner-bl, .corner-br { 
         display: none !important; 
     }

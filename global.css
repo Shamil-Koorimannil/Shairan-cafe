@@ -14,16 +14,7 @@
     font-weight: normal;
     font-style: normal;
 }
-/* --- UTILITIES --- */
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-.hide-scrollbar::-webkit-scrollbar { display: none; }
 
-/* FIX: Only use scrollbar-gutter on Desktop (min-width: 769px) */
-@media (min-width: 769px) {
-    html {
-        scrollbar-gutter: stable; 
-    }
-}
 
 /* Ensure HTML doesn't overflow horizontally on mobile */
 html {
@@ -60,7 +51,6 @@ body {
     grid-area: header;
     height: 100%;
     width: 100%;
-    background-color: var(--card-bg);
     border-radius: var(--radius);
     display: flex;
     align-items: center;
@@ -90,10 +80,10 @@ body {
     background-color: transparent;
     padding: 10px;
     border-radius: 50px;
-    border: 2px solid var(--bg-color);
     display: flex;
     gap: 10px;
     align-items: center;
+    border: none;
 }
 
 .nav-pills a {
@@ -120,14 +110,14 @@ body {
 
 .footer-card {
     grid-area: footer;
-    background-color: var(--card-bg);
-    border-radius: 50px; 
+    border-radius: var(--radius); 
     background-image: url('../assets/images/nav-img.png');
     display: flex;
     align-items: center;
     padding: 0; 
     color: var(--text-color);
     overflow: hidden; 
+    border: none;
     min-height: 80px;
 }
 
@@ -157,13 +147,31 @@ body {
 }
 
 .footer-social { 
-    /* Overriding Common Style: This is now INSIDE footer-brand, not a main block */
-    flex: none; /* Don't stretch */
-    gap: 10px;
+    flex: none;          /* Don't stretch, just fit content */
+    display: flex;       /* Aligns text and icons in a row */
+    align-items: center; /* Vertically centers them */
+    gap: 15px;           /* Space between "Keep in touch" and icons */
 }
-.footer-social a{
+
+/* Style the text */
+.footer-social span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--bg-color);
+}
+
+/* Style the icons */
+.footer-social a {
     display: flex;
-    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;           /* FIX: Removed margin-top */
+    color: var(--bg-color);
+    transition: transform 0.2s ease;
+}
+
+.footer-social a:hover {
+    transform: scale(1.1);
 }
 /* 3. MIDDLE (Copyright Text) */
 .footer-shairan {
@@ -210,8 +218,49 @@ body {
 
 
 
+/* =========================================
+   TABLET / SMALL LAPTOP TWEAK (769px - 1000px)
+   Fixes "Keep in touch" snapping on Zenbook
+   ========================================= */
+@media (min-width: 769px) and (max-width: 1000px) {
+    
+    .footer-social {
+        /* Switch to Grid to create the "Triangle" stack */
+        display: grid !important;
+        grid-template-columns: auto auto; /* Two columns for the icons */
+        justify-content: center;
+        align-content: center;
+        gap: 8px;          /* Space between icons */
+        row-gap: 4px;      /* Space between text and icons */
+        
+        /* Ensure it doesn't stretch too wide */
+        flex: none;
+        width: auto;
+    }
 
+    /* Force the text to span across the top */
+    .footer-social span {
+        grid-column: 1 / -1; /* Spans both icon columns */
+        text-align: center;
+        width: 100%;
+        margin: 0;
+        font-size: 0.65rem; /* Slightly smaller to fit nicely */
+        white-space: nowrap;
+    }
 
+    /* Center the icons in their grid cells */
+    .footer-social a {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+    
+    /* Optional: Reduce the gap in the parent container so it doesn't look too spread out */
+    .footer-brand {
+        gap: 10px; 
+        padding-left: 20px; /* Give it a bit more breathing room on the left */
+    }
+}
 
 
 
@@ -231,21 +280,23 @@ body {
         min-height: 100vh;
         overflow-x: hidden;
     }
+
 .footer-card {
-        margin: 15px;
-        margin-bottom: 90px;
+        /* FIX: Changed '0px 20px 90px 0px' to '0px 0px 90px 0px' */
+        /* This removes the extra gap on the right side */
+        margin: 0px 0px 90px 0px !important;
         
         /* 1. Force Row Layout */
         display: flex !important;
         flex-direction: row !important; 
         justify-content: space-between;
         align-items: center;
-        
+        border-radius: 20px;
         /* 2. Tight Padding to maximize space */
-        padding: 0 10px; 
+        padding: 0 12px; 
         gap: 2px;
         
-        height: 50px; /* Fixed small height */
+        height: 50px; 
         min-height: auto;
     }
 
@@ -258,10 +309,28 @@ body {
         display: flex;
         align-items: center;
     }
+.footer-brand, .footer-shairan {
+        position: relative; /* Ensure the line sticks to this box */
+    }
 
-    /* Hide Separators & Socials on Mobile to save width */
-    .footer-brand::after, .footer-shairan::after { display: none; }
-    .footer-social { display: none !important; } 
+    /* 2. Show the Dividers (Overriding the previous 'display: none') */
+    .footer-brand::after, .footer-shairan::after {
+        display: block !important; /* Force them to show */
+        content: "";
+        position: absolute;
+        right: 0;
+        
+        /* Adjust height for the smaller mobile footer */
+        top: 20%;      /* Start slightly lower */
+        height: 60%;   /* Make line shorter than the box height */
+        width: 1px;    /* Thin line */
+        background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent white */
+    }
+    
+    /* Optional: Fix spacing so text doesn't hit the line */
+    .footer-shairan {
+        padding: 0 5px; /* Add tiny padding inside the middle box */
+    }
 
     /* --- LEFT: Brand Name --- */
     .footer-brand { 
@@ -273,6 +342,60 @@ body {
     }
     /* Hide the email address on mobile, just show "Shairan Cafe" */
     .footer-email span { display: none; } 
+    /* 1. Hide the Brand Name/Email (The old left side) */
+    .footer-email { 
+        display: none !important; 
+    }
+
+    /* 2. Show and Style the Social Section (The new left side) */
+    .footer-social {
+        /* Make it visible */
+        display: grid !important;
+        
+        /* 2 Columns: One for each icon */
+        grid-template-columns: auto auto; 
+        justify-content: start;
+        align-content: center;
+        gap: 0px;
+        /* Spacing */
+        row-gap: 3px;     /* Space between text and icons */
+        
+        /* Position */
+        margin-right: auto; 
+        padding-left: 0;
+        flex: 1;
+    }
+
+    /* Force the "Keep in touch" text to span across the top row */
+    .footer-social span {
+        grid-column: 1 / -1; /* Spans both columns */
+        display: block !important;
+        font-size: 0.45rem;
+        font-weight: 600;
+        opacity: 0.9;
+        margin: 0;
+        padding-left: 10px;
+    }
+
+    /* CRITICAL: Turn off the old CSS-generated text */
+    .footer-social::before {
+        content: none !important;
+        display: none !important;
+    }
+
+    /* Reset margins for icons so they fit in the grid cells */
+    .footer-social a {
+        margin: 0 !important;
+    }
+    .footer-social a svg {
+        width: 10px;
+        height: 10px;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide the <br> tag that was in your HTML */
+    .footer-social br { display: none; }
 
     /* --- MIDDLE: Copyright Text (The missing part) --- */
     .footer-shairan {
@@ -319,7 +442,6 @@ body {
         border-radius: 50px; padding: 5px;
         display: flex; justify-content: space-between; align-items: stretch;
         gap: 3px; z-index: 10000; pointer-events: auto;
-                border: 2px solid var(--bg-color);
 
     }
     .nav-pills a {

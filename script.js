@@ -71,19 +71,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 2. SLIDESHOW LOGIC ---
-    let currentSlide = 0;
+   // --- 2. SLIDESHOW LOGIC (Fixed Infinite Loop) ---
     const slides = document.querySelectorAll('.slide');
+    let slideIndex = 0;
 
-    function showNextSlide() {
-        if (slides.length === 0) return;
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }
+    if (slides.length > 0) {
+        
+        // 1. INITIAL SETUP
+        // Hide all, ready for animation
+        gsap.set(slides, { 
+            opacity: 0, 
+            scale: 1.2, 
+            zIndex: 0 // Background layer
+        });
 
-    if(slides.length > 0) {
-        slides[0].classList.add('active');
-        setInterval(showNextSlide, 3000);
+        // Show the first one immediately
+        gsap.set(slides[0], { 
+            opacity: 1, 
+            scale: 1, 
+            zIndex: 1 // Active layer (Bottom)
+        });
+
+        function nextSlide() {
+            const currentSlide = slides[slideIndex];
+            // Calculate next index
+            slideIndex = (slideIndex + 1) % slides.length;
+            const nextSlideEl = slides[slideIndex];
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    // AFTER ANIMATION:
+                    // Downgrade the "New Active" slide to Layer 1
+                    // So the NEXT incoming slide (Layer 2) can cover it later
+                    gsap.set(nextSlideEl, { zIndex: 1 });
+                    
+                    // Call the function again
+                    gsap.delayedCall(3, nextSlide);
+                }
+            });
+
+            // ANIMATION SEQUENCE
+            // 1. Place Next Slide on Top (Layer 2) & Zoomed In
+            tl.set(nextSlideEl, { 
+                zIndex: 2, 
+                opacity: 0, 
+                scale: 1.2 
+            })
+            // 2. Animate it Visible
+            .to(nextSlideEl, { 
+                duration: 1.8, 
+                opacity: 1, 
+                scale: 1, 
+                ease: "power2.out" 
+            })
+            // 3. Hide the Old Slide (Layer 0)
+            .set(currentSlide, { 
+                zIndex: 0, 
+                opacity: 0 
+            });
+        }
+
+        // Start the loop
+        gsap.delayedCall(3.5, nextSlide);
     }
 });

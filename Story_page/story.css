@@ -160,9 +160,21 @@
         overflow-x: hidden;
     }
 
-
-
-
+.footer-card {
+        margin: 0px 15px 90px 15px !important;
+        /* 1. Force Row Layout */
+        display: flex !important;
+        flex-direction: row !important; 
+        justify-content: space-between;
+        align-items: center;
+        
+        /* 2. Tight Padding to maximize space */
+        padding: 0 10px; 
+        gap: 2px;
+        
+        height: 50px; /* Fixed small height */
+        min-height: auto;
+    }
 /* Hide logo on mobile */
 .logo-circle { display: none; }
 
